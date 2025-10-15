@@ -4,12 +4,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-const Popular = () =>{
+const Popular = ({type="tv"}) =>{
     const [data,setData] = useState([]);
 
     useEffect(()=>{
         const fetchTrending = async() =>{
-            const dataw = await  axios.get("https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc", {
+            const dataw = await  axios.get(`https://api.themoviedb.org/3/discover/${type}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc`, {
             params: {
                 api_key: import.meta.env.VITE_API_KEY,
                 language: "en-US",
@@ -19,11 +19,9 @@ const Popular = () =>{
                 accept: "application/json",
             }});
             setData(dataw.data.results);
-            // console.log(data);
         }
         fetchTrending();
     },[])
-    console.log(data);
     return(
         <>
             <div className="w-full px-4 py-6 ">

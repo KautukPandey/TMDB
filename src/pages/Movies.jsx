@@ -1,6 +1,8 @@
 import Navbar from "../components/Navbar"
 import Popular from "../components/Popular"
+import Toprated from "../components/Toprated"
 import Trending from "../components/Trending"
+import Up from "../components/Up"
 const Movies =() =>{
     return(
         <>
@@ -10,8 +12,10 @@ const Movies =() =>{
                 placeholder="   Search for a movie  "/>
                 <button className="bg-cyan-600 rounded-3xl py-2 px-4">Search </button>
             </div>
-            <Trending/>
-            <Popular/>
+            <Up/>
+            <Trending type="movie"/>
+            <Popular type="movie"/>
+            <Toprated type="movie"/>
         </>
         
     )

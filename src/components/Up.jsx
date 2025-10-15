@@ -3,13 +3,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-
 import { useState,useEffect } from "react";
-const Trending = ({type="all"}) =>{
-    const [trendAll, settrendALL] = useState([]);
-
-    const fetchD = async () => {
-        const response = await axios.get(`https://api.themoviedb.org/3/trending/${type}/week?language=en-US`, {
+const Up = ({type="movie"}) => {
+    const [data,setData] = useState([])
+    const fetch = async() => {
+        const res = await axios.get(`https://api.themoviedb.org/3/discover/${type}?include_adult=false&include_video=false&language=en-US&page=1&primary_release_date.gte=2026-01-01&sort_by=popularity.desc`,{
             params: {
                 api_key: import.meta.env.VITE_API_KEY,
                 language: "en-US",
@@ -18,18 +16,17 @@ const Trending = ({type="all"}) =>{
             headers: {
                 accept: "application/json",
             },
-        });
-        settrendALL(response.data.results);
-    };
+        })
+        setData(res.data.results)
+    }
     useEffect(()=>{
-        fetchD();
+        fetch();
     },[])
-
     return(
         <>
             <div className="w-full px-4 py-7 ">
-                <h1 className="text-xl font-bold text-black mb-3">Trending</h1>
-            {trendAll.length>0 && 
+                <h1 className="text-xl font-bold text-black mb-3">Upcoming {type}</h1>
+            {data.length>0 && 
             <Swiper 
                 modules={[Navigation, Autoplay]}
                 spaceBetween={15}
@@ -43,9 +40,9 @@ const Trending = ({type="all"}) =>{
                 1024: { slidesPerView: 6 },
                 }}
             >
-                {trendAll.map((item)=>(
+                {data.map((item)=>(
                     <SwiperSlide key={item.id}>
-                        <div className="relative group cursor-pointer">
+                        <div className="relative group cursor-pointer" onClick={()=>console.log(item.id)}>
                             <img
                                 src={`https://image.tmdb.org/t/p/w500${item.poster_path || item.backdrop_path}`}
                                 alt={item.title || item.name}
@@ -63,4 +60,4 @@ const Trending = ({type="all"}) =>{
         </>
     )
 }
-export default Trending;
+export default Up;

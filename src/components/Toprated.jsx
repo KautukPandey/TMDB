@@ -3,13 +3,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-
 import { useState,useEffect } from "react";
-const Trending = ({type="all"}) =>{
-    const [trendAll, settrendALL] = useState([]);
-
-    const fetchD = async () => {
-        const response = await axios.get(`https://api.themoviedb.org/3/trending/${type}/week?language=en-US`, {
+const Toprated=({ type = "movie" })=>{
+    const [data,setData] = useState([]);
+    const fetch=async()=>{
+        const res = await axios.get(`https://api.themoviedb.org/3/discover/${type}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=vote_count.desc`,{
             params: {
                 api_key: import.meta.env.VITE_API_KEY,
                 language: "en-US",
@@ -18,18 +16,18 @@ const Trending = ({type="all"}) =>{
             headers: {
                 accept: "application/json",
             },
-        });
-        settrendALL(response.data.results);
-    };
-    useEffect(()=>{
-        fetchD();
-    },[])
-
+        })
+        setData(res.data.results);
+    }
+    useEffect(() => {
+        fetch();
+    }, []);
+    
     return(
         <>
             <div className="w-full px-4 py-7 ">
-                <h1 className="text-xl font-bold text-black mb-3">Trending</h1>
-            {trendAll.length>0 && 
+                <h1 className="text-xl font-bold text-black mb-3">Top Rated {type}</h1>
+            {data.length>0 && 
             <Swiper 
                 modules={[Navigation, Autoplay]}
                 spaceBetween={15}
@@ -43,7 +41,7 @@ const Trending = ({type="all"}) =>{
                 1024: { slidesPerView: 6 },
                 }}
             >
-                {trendAll.map((item)=>(
+                {data.map((item)=>(
                     <SwiperSlide key={item.id}>
                         <div className="relative group cursor-pointer">
                             <img
@@ -63,4 +61,4 @@ const Trending = ({type="all"}) =>{
         </>
     )
 }
-export default Trending;
+export default Toprated;
