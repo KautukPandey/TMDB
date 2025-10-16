@@ -4,9 +4,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-const Popular = ({type="tv"}) =>{
+import { useNavigate } from "react-router-dom";
+const Popular = ({type="movie"}) =>{
     const [data,setData] = useState([]);
-
+    const navigate = useNavigate();
     useEffect(()=>{
         const fetchTrending = async() =>{
             const dataw = await  axios.get(`https://api.themoviedb.org/3/discover/${type}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc`, {
@@ -31,7 +32,7 @@ const Popular = ({type="tv"}) =>{
                 <Swiper
                     modules={[Navigation,Autoplay]}
                     spaceBetween={15}
-                    slidesPerView={9}
+                    slidesPerView={7}
                     navigation
                     autoplay={{delay:2500,
                         disableOnInteraction:false
@@ -45,13 +46,13 @@ const Popular = ({type="tv"}) =>{
                 >
                     {data.map((item)=>(
                         <SwiperSlide key={item.id}>
-                            <div className="relative group cursor-pointer">
+                            <div className="relative group cursor-pointer" onClick={()=> navigate(`/${type}/${item.id}`)}>
                                 <img
                                  src={`https://image.tmdb.org/t/p/w500${item.poster_path || item.backdrop_path}`} 
                                  alt={item.title || item.name}
                                  className="rounded-lg 
-                                 object-cover h-[250px]
-                                 w-[200px]
+                                 object-cover h-[300px]
+                                 w-full
                                  group-hover:opacity-80
                                  transition"
                                  />

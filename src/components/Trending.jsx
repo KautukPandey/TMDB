@@ -3,10 +3,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import { useNavigate } from "react-router-dom";
+
+
 
 import { useState,useEffect } from "react";
 const Trending = ({type="all"}) =>{
     const [trendAll, settrendALL] = useState([]);
+    const navigate = useNavigate();
 
     const fetchD = async () => {
         const response = await axios.get(`https://api.themoviedb.org/3/trending/${type}/week?language=en-US`, {
@@ -33,7 +37,7 @@ const Trending = ({type="all"}) =>{
             <Swiper 
                 modules={[Navigation, Autoplay]}
                 spaceBetween={15}
-                slidesPerView={9}
+                slidesPerView={6}
                 navigation
                 autoplay={{ delay: 2500, disableOnInteraction: false }}
                 loop={true}
@@ -45,11 +49,11 @@ const Trending = ({type="all"}) =>{
             >
                 {trendAll.map((item)=>(
                     <SwiperSlide key={item.id}>
-                        <div className="relative group cursor-pointer">
+                        <div className="relative group cursor-pointer" onClick={()=> navigate(`/${type}/${item.id}`)}>
                             <img
                                 src={`https://image.tmdb.org/t/p/w500${item.poster_path || item.backdrop_path}`}
                                 alt={item.title || item.name}
-                                className="rounded-lg object-cover h-[250px] w-[200px] group-hover:opacity-80 transition"
+                                className="rounded-lg object-cover h-[300px] w-full group-hover:opacity-80 transition"
                             />
                             <div className="absolute bottom-0 left-0 right-0 bg-black/60 p-1 text-xs text-white text-center opacity-0 group-hover:opacity-100 transition">
                             {item.title || item.name}

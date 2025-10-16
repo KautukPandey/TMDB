@@ -1,33 +1,61 @@
 import { NavLink } from "react-router-dom";
-const Navbar = () =>{
-    return(
-        <>
-            <div className="w-[100vw] bg-gray-800 flex justify-around h-[7vh] border-b-2 border-b-white"> 
-                <div className="text-3xl text-white font-bold mt-2">TMDB</div>
-                <div className="flex mt-3">
-                    <ul className="flex gap-3 text-xl text-white font-semibold font-serif">
-                        <li>
-                            <NavLink to="/" className={({ isActive }) => isActive ? "text-cyan-500 scale-105 transition" : "hover:text-cyan-500 transition"}>
-                                Home
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/movies" className={({ isActive }) => isActive ? "text-cyan-500 scale-105 transition" : "hover:text-cyan-500 transition"}>
-                                Movies
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/tv" className={({ isActive }) => isActive ? "text-cyan-500 scale-105 transition" : "hover:text-cyan-500 transition"}>
-                                TV Shows
-                            </NavLink>
-                        </li>
-                    </ul>
 
-                </div>
+const Navbar = () => {
+  return (
+    <nav className="sticky top-0 z-50 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-lg">
+      <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+        {/* Logo */}
+        <div className="text-3xl font-bold text-white hover:scale-105 transition-transform cursor-pointer">
+          TMDB
+        </div>
 
-            </div>
-        </>
-    )
-}
+        {/* Links */}
+        <ul className="hidden md:flex gap-6 text-lg font-semibold text-white">
+          <li>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-cyan-500 border-b-2 border-cyan-500 transition-all"
+                  : "hover:text-cyan-500 transition-all"
+              }
+            >
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/movie"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-cyan-500 border-b-2 border-cyan-500 transition-all"
+                  : "hover:text-cyan-500 transition-all"
+              }
+            >
+              Movies
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/tv"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-cyan-500 border-b-2 border-cyan-500 transition-all"
+                  : "hover:text-cyan-500 transition-all"
+              }
+            >
+              TV Shows
+            </NavLink>
+          </li>
+        </ul>
+
+        {/* Mobile menu icon (optional) */}
+        <div className="md:hidden text-white text-2xl cursor-pointer">
+          &#9776;
+        </div>
+      </div>
+    </nav>
+  );
+};
 
 export default Navbar;

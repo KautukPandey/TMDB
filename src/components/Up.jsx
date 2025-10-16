@@ -4,8 +4,10 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 const Up = ({type="movie"}) => {
     const [data,setData] = useState([])
+    const navigate = useNavigate();
     const fetch = async() => {
         const res = await axios.get(`https://api.themoviedb.org/3/discover/${type}?include_adult=false&include_video=false&language=en-US&page=1&primary_release_date.gte=2026-01-01&sort_by=popularity.desc`,{
             params: {
@@ -42,11 +44,11 @@ const Up = ({type="movie"}) => {
             >
                 {data.map((item)=>(
                     <SwiperSlide key={item.id}>
-                        <div className="relative group cursor-pointer" onClick={()=>console.log(item.id)}>
+                        <div className="relative group cursor-pointer" onClick={()=> navigate(`/${type}/${item.id}`)}>
                             <img
                                 src={`https://image.tmdb.org/t/p/w500${item.poster_path || item.backdrop_path}`}
                                 alt={item.title || item.name}
-                                className="rounded-lg object-cover h-[250px] w-[200px] group-hover:opacity-80 transition"
+                                className="rounded-lg object-cover h-[300px] w-full group-hover:opacity-80 transition"
                             />
                             <div className="absolute bottom-0 left-0 right-0 bg-black/60 p-1 text-xs text-white text-center opacity-0 group-hover:opacity-100 transition">
                             {item.title || item.name}
