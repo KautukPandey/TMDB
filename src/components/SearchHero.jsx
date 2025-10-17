@@ -1,6 +1,15 @@
 import React from "react";
 import bg from "../assets/bg.png";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 const SearchHero=()=>{
+    const [query, setQuery] = useState("");
+    const navigate = useNavigate();
+    const handleSearch = () => {
+        if (query.trim()) {
+            navigate(`/search/${query}`);
+        }
+    };
     return (
         <>
             <div className="relative h-[70vh] md:h-[60vh]">
@@ -22,8 +31,13 @@ const SearchHero=()=>{
                             type="text"
                             className="flex-1 rounded-full p-3 text-white text-lg focus:outline-none"
                             placeholder="Search for a movie, TV show, or person..."
+                            value={query}
+                            onChange={(e)=>setQuery(e.target.value)}
                         />
-                        <button className="bg-cyan-500 hover:bg-cyan-600 transition-colors text-white rounded-full py-3 px-6 text-lg font-semibold">
+                        <button 
+                        className="bg-cyan-500 hover:bg-cyan-600 transition-colors text-white rounded-full py-3 px-6 text-lg font-semibold"
+                        onClick={handleSearch}
+                        >
                             Search
                         </button>
                     </div>
