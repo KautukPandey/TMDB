@@ -11,7 +11,7 @@ const Tv =() =>{
             <Navbar/>
             <div className="flex flex-wrap items-center justify-center gap-4 mx-6 my-6">
                 <CompSearch/>
-                <Genres type="movie" />
+                <Genres type="tv" />
             </div>
             <Up type="tv"/>
             <Trending type="tv"/>
