@@ -20,7 +20,7 @@ const Genre=({type})=>{
                         api_key: import.meta.env.VITE_API_KEY,
                         with_genres: genreId,
                         language: "en-US",
-                        region: "IN",
+                        region: "US",
                         page,
                     },
 
